@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres:14.2-alpine
+    restart: unless-stopped
+    # ports:
+    #   - '5432:5432'
+    environment:
+      POSTGRES_DB: tracksales
+      POSTGRES_USER: tracksalesuser
+      POSTGRES_PASSWORD: tracksalespasswww
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+    environment:
+      DOCKER: True
+      DATABASE_NAME: tracksales
+      DATABASE_USER: tracksalesuser
+      DATABASE_PASSWORD: tracksalespasswww
+      DATABASE_HOST: db
+      
+
+volumes:
+  postgresql-data:
+    driver: local
