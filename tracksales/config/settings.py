@@ -1,10 +1,17 @@
+import os
 from pathlib import Path
+import environ
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SECRET_KEY = 'django-insecure-yb()_8icze#eg#bf#55r+qcom&ph*9%2hp2@g&u7)-tl*psg4y'
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-DEBUG = True
+
+SECRET_KEY = env("SECRET_KEY")
+
+DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -59,11 +66,20 @@ WSGI_APPLICATION = 'tracksales.config.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': {
+   'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env("DATABASE_NAME"),
+        'USER': env("DATABASE_USER"),
+        'PASSWORD': env("DATABASE_PASSWORD"),
+        'HOST': env("DATABASE_HOST"),
+        'PORT': env("DATABASE_PORT"),
+   },
+   'sqlite3': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+   }
 }
+
 
 
 # Password validation
