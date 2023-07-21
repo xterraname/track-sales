@@ -51,4 +51,7 @@ class Order(models.Model):
 
         total_amount = total_amount or 0.0
 
-        return total_amount
+        return f"${total_amount}"
+    
+    def __str__(self) -> str:
+        return f"{self.client} [{self.employee}] {self.price()}"

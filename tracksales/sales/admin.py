@@ -28,5 +28,5 @@ class ProductOrderAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('client', 'employee', 'date')
+    list_display = ('client', 'employee', 'price', 'date')
     raw_id_fields = ('client', 'products')
