@@ -31,11 +31,14 @@ class ProductOrder(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
 
+    def __str__(self) -> str:
+        return f"{self.product.name} (x{self.quantity})"
+
 
 class Order(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, related_name='orders')
     products = models.ManyToManyField(ProductOrder)
-    employee = models.ForeignKey(Employee, on_delete=models.PROTECT)
+    employee = models.ForeignKey(Employee, on_delete=models.PROTECT, related_name='orders')
     
     date = models.DateField(auto_now_add=True)
 
@@ -44,6 +47,6 @@ class Order(models.Model):
             total_amount=Sum(F('quantity') * F('product__price'))
         )['total_amount']
 
-        total_amount = total_amount or 0
+        total_amount = total_amount or 0.0
 
         return total_amount
