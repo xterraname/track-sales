@@ -1,3 +1,5 @@
+import datetime as dt
+
 from django.db import models
 from django.db.models import Sum, F
 
@@ -39,8 +41,8 @@ class Order(models.Model):
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, related_name='orders')
     products = models.ManyToManyField(ProductOrder)
     employee = models.ForeignKey(Employee, on_delete=models.PROTECT, related_name='orders')
-    
-    date = models.DateField(auto_now_add=True)
+     
+    date = models.DateField(default=dt.date.today)
 
     def price(self):
         total_amount = self.products.aggregate(

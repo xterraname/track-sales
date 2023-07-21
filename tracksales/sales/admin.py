@@ -23,8 +23,10 @@ class ProductAdmin(admin.ModelAdmin):
 class ProductOrderAdmin(admin.ModelAdmin):
     list_display = ('product', 'quantity')
     list_editable = ('quantity', )
+    raw_id_fields = ('product', )
 
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('client', 'employee', 'date')
+    raw_id_fields = ('client', 'products')
