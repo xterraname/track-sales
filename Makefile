@@ -10,6 +10,10 @@ migrations:
 migrate:
 	python -m tracksales.manage migrate
 
+.PHONY: collectstatic
+collectstatic:
+	python -m tracksales.manage collectstatic
+
 .PHONY: shell
 shell:
 	python -m tracksales.manage shell
