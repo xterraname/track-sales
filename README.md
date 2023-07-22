@@ -13,6 +13,14 @@ Install the required dependencies
 ```bash
 pip install -r requirements.txt
 ```
+Create database
+```bash
+sudo -u postgres psql
+
+create user tracksalesuser with encrypted password 'tracksalespasswww';
+create database tracksales with encoding 'utf8' owner tracksalesuser;
+\q
+```
 Migrate Database
 ```bash
 make migrate
